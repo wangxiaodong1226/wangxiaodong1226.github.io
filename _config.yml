@@ -1,22 +1,22 @@
 # Site settings
 title: YanDong Blog
-SEOTitle: 你的博客 | Your Blog
+SEOTitle: 我的博客 | My Blog
 header-img: img/home-bg.jpg
 email: 3435746154@qq.com
 description: ""
 keyword: ""
-url: "https://wangxiaodong1226.github.io"              # your host, for absolute URL
+url: "http://www.wangxiaodong1226.xyz"              # your host, for absolute URL
 # baseurl: "/huxblog-boilerplate"         # for example, '/blog' if your blog hosted on 'host/blog'
 
 
 
 # SNS settings
 RSS: false
-weibo_username:     huxpro
-zhihu_username:     huxpro
-github_username:    huxpro
+weibo_username:     wangxiaodong1226
+zhihu_username:     wangxiaodong1226
+github_username:    wangxiaodong1226
 #twitter_username:  huxpro
-facebook_username:  huxpro
+facebook_username:  wangxiaodong1226
 
 
 
