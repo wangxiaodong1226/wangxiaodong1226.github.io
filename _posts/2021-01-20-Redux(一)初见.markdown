@@ -2,7 +2,7 @@
 layout:     post
 title:      "Redux(一)初见"
 subtitle:   " \"Reedux\""
-date:       2021-01-19 13:00:00
+date:       2021-01-20 12:00:00
 author:     "Yandong"
 header-img: "img/post-bg-2021.jpg"
 tags:
@@ -49,9 +49,9 @@ tags:
 
 ---
 ## Redux流程图
-* 1.全局通常有一个Store,存储我们的State。
-* 2.Component中在某些情况下会派发Action(这些Action是我们提前定义好的)
-* 3.Reducer会接收到这些Action，并且在Reducer中会返回一个新的State，作为Store的State。
-* 4.State发生更新后会触发通知，告知订阅者数据发生了变化。
-* 5.订阅者拿到最新的数据(在props中)，更新到jsx中，界面发生改变。
-![java-javascript](/img/react/redux4.png)
+1. `全局通常有一个Store,存储我们的State`。
+2. `Component中在某些情况下会派发Action(这些Action是我们提前定义好的)`
+3. `Reducer会接收到这些Action，并且在Reducer中会返回一个新的State，作为Store的State`。
+4. `State发生更新后会触发通知，告知订阅者数据发生了变化`。
+5. `订阅者拿到最新的数据(在props中)，更新到jsx中，界面发生改变`。
+  ![java-javascript](/img/react/redux4.png)
