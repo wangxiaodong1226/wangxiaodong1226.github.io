@@ -1,0 +1,57 @@
+---
+layout:     post
+title:      "Redux(一)初见"
+subtitle:   " \"Reedux\""
+date:       2021-01-19 13:00:00
+author:     "Yandong"
+header-img: "img/post-bg-2021.jpg"
+tags:
+    - react
+---
+
+> 在React开发中,Redux对于我们是非常重要的。但是初次接触redux会感觉redux的学习坡度非常陡峭，难度非常大。
+
+## 认识redux
+* JS开发应用程序需要管理的状态越来越多，越来越复杂。
+* 管理不断变化的state是非常困难的
+* React在视图层帮助我们解决了DOM渲染过程，但是state要留给我们自己管理。
+* **Redux就是一个帮助我们管理state的容器提供状态管理**。
+(可以和其他界面库一起使用比如vue并且非常小)
+
+---
+## redux核心概念
+比如我们有一个朋友列表需要渲染
+* **如果没有统一规范来操作这段数据，那么整个数据的变化是无法跟踪的**。
+* 比如页面的某处通过products.push方式增加一条数据
+* 或通过product[0].age=25修改一条数据。
+* **整个应用错综复杂，当出现bug时，很难跟踪到底哪里发生的变化**。
+![java-javascript](/img/react/redux1.png)
+* **Redux要求我们用action更新数据**
+* **所有数据的变化，必须通过派发(dispatch)action来更新**。
+* **action是一个普通的Javascript对象，用来描述这次更新的type和content**。
+> **强制使用action的好处是可以清晰的知道数据到底发生了什么样的变化，所有的数据变化都是可追溯，可预测的**。
+![java-javascript](/img/react/redux2.png)
+
+---
+### 如何将state和action联系在一起 reducer
+* reducer是一个纯函数(确定出入产生确定输出，无副作用)
+* **将传入的state和action结合起来生成一个新的state**.
+![java-javascript](/img/react/redux3.png)
+---
+
+### redux三大原则
+* 单一数据源
+* **整个应用程序的state被存储在一棵object tree中，并且这个object tree只存储在一个store中**。
+* state是可读的
+* **唯一修改state的方法一定是触发action,不要在试图其他地方修改state**
+* 使用纯函数来进行修改
+* **通过reducer将旧state和actions联系在一起，返回一个新的state**.
+
+---
+## Redux流程图
+* 1.全局通常有一个Store,存储我们的State。
+* 2.Component中在某些情况下会派发Action(这些Action是我们提前定义好的)
+* 3.Reducer会接收到这些Action，并且在Reducer中会返回一个新的State，作为Store的State。
+* 4.State发生更新后会触发通知，告知订阅者数据发生了变化。
+* 5.订阅者拿到最新的数据(在props中)，更新到jsx中，界面发生改变。
+![java-javascript](/img/react/redux4.png)
