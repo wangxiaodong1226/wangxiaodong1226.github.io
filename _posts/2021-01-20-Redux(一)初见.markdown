@@ -25,18 +25,18 @@ tags:
 * 比如页面的某处通过products.push方式增加一条数据
 * 或通过product[0].age=25修改一条数据。
 * **整个应用错综复杂，当出现bug时，很难跟踪到底哪里发生的变化**。
-![java-javascript](/img/react/redux1.png)
+![java-javascript](/img/react/redux/redux1.png)
 * **Redux要求我们用action更新数据**
 * **所有数据的变化，必须通过派发(dispatch)action来更新**。
 * **action是一个普通的Javascript对象，用来描述这次更新的type和content**。
 > **强制使用action的好处是可以清晰的知道数据到底发生了什么样的变化，所有的数据变化都是可追溯，可预测的**。
-![java-javascript](/img/react/redux2.png)
+![java-javascript](/img/react/redux/redux2.png)
 
 ---
 ### 如何将state和action联系在一起 reducer
 * reducer是一个纯函数(确定出入产生确定输出，无副作用)
 * **将传入的state和action结合起来生成一个新的state**.
-![java-javascript](/img/react/redux3.png)
+![java-javascript](/img/react/redux/redux3.png)
 ---
 
 ### redux三大原则
@@ -54,4 +54,41 @@ tags:
 3. `Reducer会接收到这些Action，并且在Reducer中会返回一个新的State，作为Store的State`。
 4. `State发生更新后会触发通知，告知订阅者数据发生了变化`。
 5. `订阅者拿到最新的数据(在props中)，更新到jsx中，界面发生改变`。
-  ![java-javascript](/img/react/redux4.png)
+  ![java-javascript](/img/react/redux/redux4.png)
+
+---
+## redux基本使用
+* 搭建项目结构
+  ![java-javascript](/img/react/redux/redux5.png)
+  ![java-javascript](/img/react/redux/redux6.png)
+* **1.创建一个对象，作为初始状态**
+  ![java-javascript](/img/react/redux/redux7.png)
+* **2.创建Store存储这个状态**
+* 创建store必须创建reducer
+* 我们可以通过store.getState来获取当前的state
+  ![java-javascript](/img/react/redux/redux8.png)
+* **3.通过action来修改state**
+* 通过dispatch来派发action
+* 通常action都会有type属性，也可以携带其他数据
+  ![java-javascript](/img/react/redux/redux9.png)
+* **4.修改reducer中处理代码**
+  ![java-javascript](/img/react/redux/redux10.png)
+* **5.可以在派发action前，监听store的变化**
+  ![java-javascript](/img/react/redux/redux11.png)
+
+完整案例代码
+  ![java-javascript](/img/react/redux/redux12.png)
+
+---
+## redux结构划分
+如果我们将所有逻辑写在一起，那么redux变得复杂时代码就难以维护。
+所以，将代码进行拆分，将**store**、**reducer**、**actionCreator**、**constants**拆分成一个个文件。
+* 创建store.js文件
+  ![java-javascript](/img/react/redux/redux13.png)
+
+* 创建reducer.js
+  ![java-javascript](/img/react/redux/redux14.png)
+* 创建actionCreator.js
+  ![java-javascript](/img/react/redux/redux15.png)
+* 创建constants.js
+  ![java-javascript](/img/react/redux/redux16.png)
