@@ -15,9 +15,7 @@ tags:
 * redux是一个独立做状态管理的JS库
 * 集中式管理(读/写)react应用中多个组件共享的状态
 * 如果某个状态需要在任何地方都可以拿到
-* ![redux原理图](/redux.png)
-* ![blockchain](https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/
-u=702257389,1274025419&fm=27&gp=0.jpg "区块链")
+![java-javascript](/img/in-post/post-js-version/javascript-java.jpg)
 ---
 
 ## 核心API
