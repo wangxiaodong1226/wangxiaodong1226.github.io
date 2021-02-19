@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "Redux"
+title:      "ReduxAPI"
 subtitle:   " \"redux\""
 date:       2021-01-18 12:00:00
 author:     "Yandong"

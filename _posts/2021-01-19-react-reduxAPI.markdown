@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "React-redux"
+title:      "React-reduxAPI"
 subtitle:   " \"react-redux\""
 date:       2021-01-19 12:00:00
 author:     "Yandong"

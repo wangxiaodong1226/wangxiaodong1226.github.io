@@ -1,0 +1,20 @@
+---
+layout:     post
+title:      "计算机网络基础"
+subtitle:   " \"http\""
+date:       2021-01-24 12:00:00
+author:     "Yandong"
+header-img: "img/post-bg-2021.jpg"
+tags:
+    - 计算机网络
+---
+物理层->数据链路层->网络层->传输层->会话层->表示层->应用层
+![java-javascript](/img/网络/OSI模型.png)
+![java-javascript](/img/网络/TCP&IP模型.png)
+![java-javascript](/img/网络/3.png)
+## TCP三次握手
+![java-javascript](/img/网络/4.png)
+![java-javascript](/img/网络/5.png)
+
+
+
