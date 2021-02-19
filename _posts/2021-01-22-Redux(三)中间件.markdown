@@ -1,0 +1,108 @@
+---
+layout:     post
+title:      "Redux(三)中间件"
+subtitle:   " \"Redux middleware\""
+date:       2021-01-21 12:00:00
+author:     "Yandong"
+header-img: "img/post-bg-2021.jpg"
+tags:
+    - react
+---
+>在之前的案例中，redux保存的counter是一个本地定义数据，我们可以直接通过同步的操作dispatch action，state就会被立即更新。但是真实开发中，redux中保存的很多数据可能来自服务器，我们需要进行异步的请求，再把数据保存到redux中。
+---
+
+## 组件中异步请求
+* 之前网络请求可以在class组件的componentDidMount中发送，有这样的结构：
+![java-javascript](/img/react/redux中间件/middleware1.png)
+
+### 案例
+* 在Home组件中请求banners和recommends的数据
+* 在Profile组件中展示banners和recommends的数据
+* 在reducer.js中添加state初始化数据和reducer函数中处理代码
+![java-javascript](/img/react/redux中间件/middleware2.png)
+* constants中增加常量
+![java-javascript](/img/react/redux中间件/middleware3.png)
+* actionCreators.js中添加actions
+![java-javascript](/img/react/redux中间件/middleware4.png)
+* Home组件
+![java-javascript](/img/react/redux中间件/middleware5.png)
+* Profile组件
+![java-javascript](/img/react/redux中间件/middleware6.png)
+![java-javascript](/img/react/redux中间件/middleware7.png)
+---
+
+## redux中异步请求
+> 上面代码有缺陷 必须将网络请求的异步代码放到组件的生命周期来完成。网络请求也是状态管理一部分，应该交给redux来管理.
+![java-javascript](/img/react/redux中间件/middleware8.png)
+* redux如何异步操作呢？-**中间件**
+* **Middleware可以帮助我们在请求和响应之间嵌入一些操作的代码，比如cookie解析、日志记录、文件压缩等操作**
+* `在redux中，中间件在dispatch的action和最终达到的reducer之间，拓展一些自己的代码`
+* **网络请求中间件使用redux-thunk**
+* `我们知道，默认情况下dispatch(action),action需要是一个Javascript对象。`
+* `redux-thunk可以dispatch(action函数)，action可以是一个函数`
+* `该函数会被调用，并且会传给这个函数一个dispatch函数和getState函数`
+* `dispatch函数用于我们之后再次派发action`；
+* `getState函数考虑到我们之后的一些操作需要依赖原来的状态，用于让我们可以获取之前的一些状态`
+---
+## 操作
+`yarn add redux-thunk`
+* 1.在创建store时传入应用了middleware的enhancer函数
+  ![java-javascript](/img/react/redux中间件/middleware9.png)
+
+* 2.定义返回一个函数的action
+  ![java-javascript](/img/react/redux中间件/middleware10.png)
+
+* 3.修改home.js中的代码
+  ![java-javascript](/img/react/redux中间件/middleware11.png)
+---
+
+## redux-saga
+> saga使用了ES6的generator语法
+### generator
+* 在JavaScript中编写一个普通的函数，进行调用会立即拿到这个函数的返回结果
+  ![java-javascript](/img/react/redux中间件/middleware12.png)
+* 将这个函数编写成一个生成器函数：
+  ![java-javascript](/img/react/redux中间件/middleware13.png)
+* **调用iterator的next函数，会销毁一次迭代器，并且返回一个yield的结果**
+  ![java-javascript](/img/react/redux中间件/middleware14.png)
+* 研究一下foo生成器函数代码的执行顺序
+  ![java-javascript](/img/react/redux中间件/middleware15.png)
+* generator和promise一起使用：
+  ![java-javascript](/img/react/redux中间件/middleware16.png)
+---
+
+### redux-saga使用
+`yarn add redux-saga`
+* 1.集成redux-saga中间件
+  ![java-javascript](/img/react/redux中间件/middleware17.png)
+* saga.js文件
+* `takeEvery:传入多个监听的actionType,每一个都可以被执行。`
+* `put:在saga中派发action不再是通过dispatch，而是通过put`
+* `all:可以在yield时put多个action`
+  ![java-javascript](/img/react/redux中间件/middleware18.png)
+
+---
+## 中间件原理
+即在redux中插入一些自己的操作
+* 比如在dispatch之前打印本次action，dispatch之后打印最新store state
+* `将对应的代码插入到redux的某部分，让之后所有的dispatch都可以包含这样的操作`
+
+没有中间件,多麻烦
+  ![java-javascript](/img/react/redux中间件/middleware19.png)
+将代码封装到一个独立的函数
+  ![java-javascript](/img/react/redux中间件/middleware20.png)
+也有缺陷
+* **调用者（使用者）在使用我的dispatch时，必须使用我另外封装的一个函数dispatchAndLog；以麻烦，继续优化**
+* **修改dispatch**
+* 在调用dispatch的过程中，真正调用的函数其实是dispatchAndLog
+  ![java-javascript](/img/react/redux中间件/middleware21.png)
+
+> redux中利用一个中间件redux-thunk可以让我们的dispatch不再只是处理对象，并且可以处理函数,怎么实现的？
+
+  ![java-javascript](/img/react/redux中间件/middleware22.png)
+将两个patch应用起来，进行测试：
+  ![java-javascript](/img/react/redux中间件/middleware23.png)
+### 合并中间件
+  ![java-javascript](/img/react/redux中间件/middleware24.png)
+* 原理
+  ![java-javascript](/img/react/redux中间件/middleware25.png)
