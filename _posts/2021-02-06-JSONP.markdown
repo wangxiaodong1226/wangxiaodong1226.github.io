@@ -1,0 +1,77 @@
+---
+layout:     post
+title:      "JSONP"
+subtitle:   " \"不折腾的前端，和咸鱼有什么区别\""
+date:       2021-02-06 12:00:00
+author:     "Yandong"
+header-img: "img/post-bg-2021.jpg"
+tags:
+    - 手写源码系列
+---
+
+## 基本原理
+`利用script标签的src没有跨域限制来完成跨域目的`
+* 执行过程
+1.前端定义一个解析函数:**jsonCallBack = function(res){}** <br>
+2.通过**params**的形式包装**script**标签的请求参数，并且声明执行函数，如：**cb=jsonCallBack** <br>
+3.后端获取前端声明的执行函数(jsonpCallBack),并且带上参数且调用函数的方式传递给前端 <br>
+4.前端再script标签返回资源的时候就会执行jsonCallBack并通过回调函数的方式拿到数据 <br>
+* 【缺点】只能进行GET请求
+* 【优点】兼容性好，在一些古老的的浏览器中都可以运行
+
+## 基本实现
+* 前端部分
+<script tyep='text/javascript'>
+    window.jsonpCallBack = function(res){
+        console.log(res)
+    }
+</script>
+<script src='http://localhost:8000/api/jsonp?id=1 & cb=jsonpCallBack' type='text/javascript'></script>
+* 1.创建一个jsonpCallBack函数，但是还没有被调用
+* 2.加载src中的资源，调用localhost:8000端口的API:api/jsonp,传递的参数是id=1以及cb=jsonpCallBack
+
+* 后端部分
+<script>
+    const Koa = require('koa);
+    const app = new Koa();
+    const items = [{id:1,title:'title1'},{id:2,title:'title2'}];
+    app.use(async(ctx,next)=>{
+        if (ctx.path === '/api/jsonp') {
+        const { cb, id } = ctx.query;
+        const title = items.find(item => item.id == id)['title']
+        ctx.body = `${cb}(${JSON.stringify({title})})`;
+        return;
+        }
+    })
+    console.log('listen 8080...');
+    app.listen(8080)
+</script>
+* 解析ctx.query,将id和cb获取到
+* 查找title
+* 返回一个字符串，该字符串调用cb方法，并将title转成字符串，返回到内容ctx.body中
+
+* 前端部分
+前端接收到node.js的返回，直接调用了cb(title)方法，最终执行了它的回调，从而执行。
+<script tyep='text/javascript'>
+    window.jsonpCallBack = function(res){
+        console.log(res)
+    }
+</script>
+输出:{title:'title1'}
+
+## 手写JSONP
+* 封装JSONP方法，接收4个参数
+* url:api接口
+* params:api接口数据
+* callbackKey:与后端约定回调函数用哪个字段
+* callback:拿到数据之后前端执行的回调函数
+<script>
+    JSONP({
+        url:'https://www.baidu.com/s',
+        params:{wd:'yanyan'},
+        callBackKey:'cb',
+        callback(res){
+            console.log(res)
+        }
+    })
+</script>
