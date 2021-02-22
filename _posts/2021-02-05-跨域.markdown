@@ -1,0 +1,135 @@
+---
+layout:     post
+title:      "跨域"
+subtitle:   " \"什么是跨域，跨域有哪些方法\""
+date:       2021-02-05 12:00:00
+author:     "Yandong"
+header-img: "img/post-bg-2021.jpg"
+tags:
+    - 计算机网络
+---
+
+## 跨域
+* 只要是协议、域名、端口有任何一个不同，都被当作是不同的域
+跨域有如下几种方法:
+1.**JSONP**,只能用get方法
+2.**通过修改document.domain来跨子域**。只能把document.domain设置成自身或更高一级的父域
+3.**使用window.name来进行跨域**；window对象有个name属性，该属性有个特征：即在一个窗口(window)的生命周期内，窗口载入的所有页面都是共享一个window.name的，每个页面对window.name都有读写的权限，window.name是持久
+存在一个窗口载入过的所有页面中的，并不会因新页面的载入而进行重置。
+4.**使用HTML5中新引入的window.postMessage方法来跨域传送数据**，使用它来自其他的window对象发送消息，无论这个window对象是属于同源或不同源，目前IE8+、FireFox、Chrome、Opera等浏览器都已经支持window.postMessage方法
+5.**CORS** 
+CORS背后的基本思想是使用自定义的HTTP头部让浏览器与服务器进行沟通，从而决定请求或响应是应该成功还是失败。
+它允许浏览器向跨源服务器，发出XMLHttpRequest请求，从而克服了AJAX只能同源使用的限制
+6.**服务器代理**
+7.**flash**
+
+---
+## 同源策略
+源--指URL
+* https://github.com/wangxiaodong1226/wangxiaodong1226.github.io
+协议：http、https <br>
+域名:github.com、wangxiaodong1226.xyz<br>
+端口:80、443<br>
+> 其中，如果URL未标明端口，那么http默认是80端口，https默认是443端口
+
+`同源策略，是指协议、域名、端口一致的情况下，才属于同源`。<br>
+https://github.com/wangxiaodong1226/wangxiaodong1226.github.io
+
+| URL                                                  是否同源                       原因 |      |      |
+| ------------------------------------------------------------ | ---- | ---- |
+|                                                              |      |      |
+| http://github.com                                   否                                协议不同 |      |      |
+|                                                              |      |      |
+| https://github2.com                               否                                域名不同 |      |      |
+|                                                              |      |      |
+| https://github.com:80/wangxiaodong1226   否             https默认端口443 |      |      |
+|                                                              |      |      |
+| https://money.github2.com                  是                多级域名和主域名一致 |      |      |
+
+在上面，`如果两个页面对应的地址不同源，那么浏览器就会判定跨域`，从而导致下面问题：
+* Ajax请求不能发送
+* 无法获取DOM元素并进行操作
+* 无法读取Cookie、LocalStorage和IndexDB
+---
+
+## **出于怎样的考虑，浏览器才能设置跨域**？
+`同源政策的目的，是为了保证用户信息的安全，防止恶意的网站窃取数据。是浏览器做的努力`<br>
+首先，**跨域只存在于浏览器端，因为我们知道浏览器的形态是很开放的，所以我们需要对它有所限制**。<br>
+其次，**同源策略主要是为了保证用户信息的安全，可分为两种:Ajax同源策略和DOM同源策略**。<br>
+`Ajax同源策略主要是使得不同源的页面不能获取cookie且不能发起Ajax请求，这样在一定层度上防止了CSRF攻击。`<br>
+`DOM同源策略也一样，它限制了不同源页面不能获取DOM，这样可以防止一些恶意网站在自己的网站中利用iframe嵌入正规的网站并迷惑用户，以此来达到窃取用户信息`。<br>
+---
+
+## 实际开发场景为什么会出现跨域
+1.前后端部署的机子，不属于同一台云服务器
+2.同一台服务器，但是你在https://github.com请求的是https://github2.com上的资源
+---
+
+## 实现跨域的方式
+
+### JSONP
+`浏览器虽然有同源限制，但是项script标签这种通过src地址来加载一些内容的时候浏览器是允许进行跨域请求的。`<br>
+`利用script标签没有浏览器跨域限制的漏洞，网页可以得到从其他来源动态产生的JSON数据。JSONP请求一定需要对方的服务器做支持才可以。`
+
+优缺点:
+1.【优点】Ajax和JSONP都是客户端向服务端发送请求，从而获取数据的方式。但是Ajax属于同源策略，而JSONP属于非同源策略。
+2.【优点】兼容性好，能解决主流浏览器跨域访问的问题
+3.【缺点】仅支持get请求
+4.不安全，可能会遭受到xss攻击。
+
+实现过程:
+* `创建一个 script 标签，这个 script 标签的 src 就是请求的地址`；
+* `这个 script 标签插入到 DOM 中，浏览器就根据 src 地址访问服务器资源`
+* `返回的资源是一个文本，但是因为是在 script 标签中，浏览器会执行它`
+* `而这个文本恰好是函数调用的形式，即函数名（数据），浏览器会把它当作 JS 代码来执行即调用这个函数`
+* `只要提前约定好这个函数名，并且这个函数存在于 window 对象中，就可以把数据传递给处理函数`
+
+看[JSOP手写源码系列]()
+
+### CORS
+跨域资源请求(CORS)是一种机制，是W3C标准。<br>
+
+`浏览器在请求一个跨域资源的时候，如果是跨域的 Ajax 请求，他会在请求头中加一个origin字段，但他是不知道这个资源服务端是否允许跨域请求的。浏览器会发送到服务端，如果服务器返回的头中没有'Access-Control-Allow-Origin': '对应网址或 * ' 的话，那么浏览器就会把请求内容给忽略掉，并且在控制台报错`<br>
+
+它**允许浏览器向跨源服务器，发出XMLHttpRequest或Fetch请求请求，并且整个CORS通信过程都是浏览器自动完成的，不需要用户参与**。<br>
+
+而**使用这种跨域资源共享的前提是，浏览器必须支持这个功能，并且服务器端也必须同意这种‘跨域’请求，因此实现CORS的关键是服务器需要服务器**。<br>
+
+**浏览器会自动进行CORS通信，实现CORS通信的关键是后端，只要后端实现了CORS，就实现了跨域**。<br>
+
+`服务端设置Access-Control-Allow-Origin,就可以开启CORS`。<br>
+该属性`表示哪些域名可以访问资源，如果设置通配符则表示所有网站都可以访问资源`。
+
+CORS的请求分为两种:
+
+* **简单请求的发送从代码上看起来和普通的XHR没太大区别，但是HTTP头当中要求总是包含一个域(Origin)的信息。该域包含协议名、地址以及一个可选的端口**。
+HTTP方法包括HEAD、GET、POST <br>
+HTTP头信息包括Accept、Accept-Langange、Content-Langange、Last-Event-ID等<br>
+
+
+* **复杂请求不止发送一个请求。其中最先发送的是一种'预请求'，而服务器也需要返回'预回应'作为相应。预请求实际上是对服务器的一种权限请求，只有当预请求成功返回，实际请求才开始执行**。
+
+`CORS预请求，服务器在HTTP header中加入允许请求的方法和Content-Type后，其他指定的方法和Content-Type就可以成功请求了`。
+```
+   'Access-Control-Allow-Headers': '允许Content-Type'
+   'Access-Control-Allow-Methods': '允许的请求方法'
+   'Access-Control-Max-Age': '预请求允许其他方法和类型传输的时间' 
+```
+---
+
+## postMessage
+postMessage 是 HTML5 XMLHttpRequest Level 2 中的 API，且是为数不多可以跨域操作的 window 属性之一.
+
+`postMessage() 方法允许来自不同源的脚本采用异步方式进行有限的通信，可以实现跨文本档、多窗口、跨域消息传递`。
+![java-javascript](/img/网络/16.png)
+
+## Websocket
+Websocket是HTML5的一个持久化的协议，它实现了浏览器与服务器的全双工通信，同时也是跨域的一种解决方案。
+Websocket是一种双向通信协议，在建立连接之后，Websocket的server与client都能主动向双方发送或接受数据。
+![java-javascript](/img/网络/16.png)
+
+[详见](https://wangxiaodong1226.xyz/2021/02/03/websocket%E5%92%8Chttp%E5%8C%BA%E5%88%AB/)
+
+## Nginx
+使用Nginx反向代理实现跨域，是最简单的跨域方式。
+只需要修改Nginx的配置即可解决跨域问题，支持所有的浏览器，支持Session，不需要修改任何代码，并且不会影响服务器性能。
