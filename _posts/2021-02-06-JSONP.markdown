@@ -21,16 +21,19 @@ tags:
 
 ## 基本实现
 * 前端部分
-<script tyep='text/javascript'>
-    window.jsonpCallBack = function(res){
-        console.log(res)
-    }
-</script>
-<script src='http://localhost:8000/api/jsonp?id=1 & cb=jsonpCallBack' type='text/javascript'></script>
+```
+    <script tyep='text/javascript'>
+        window.jsonpCallBack = function(res){
+            console.log(res)
+        }
+    </script>
+    <script src='http://localhost:8000/api/jsonp?id=1 & cb=jsonpCallBack' type='text/javascript'></script>
+```
 * 1.创建一个jsonpCallBack函数，但是还没有被调用
 * 2.加载src中的资源，调用localhost:8000端口的API:api/jsonp,传递的参数是id=1以及cb=jsonpCallBack
 
 * 后端部分
+```
 <script>
     const Koa = require('koa);
     const app = new Koa();
@@ -46,25 +49,28 @@ tags:
     console.log('listen 8080...');
     app.listen(8080)
 </script>
+```
 * 解析ctx.query,将id和cb获取到
 * 查找title
 * 返回一个字符串，该字符串调用cb方法，并将title转成字符串，返回到内容ctx.body中
 
 * 前端部分
 前端接收到node.js的返回，直接调用了cb(title)方法，最终执行了它的回调，从而执行。
+```
 <script tyep='text/javascript'>
     window.jsonpCallBack = function(res){
         console.log(res)
     }
 </script>
 输出:{title:'title1'}
-
+```
 ## 手写JSONP
 * 封装JSONP方法，接收4个参数
 * url:api接口
 * params:api接口数据
 * callbackKey:与后端约定回调函数用哪个字段
 * callback:拿到数据之后前端执行的回调函数
+```
 <script>
     JSONP({
         url:'https://www.baidu.com/s',
@@ -75,3 +81,4 @@ tags:
         }
     })
 </script>
+```
