@@ -51,7 +51,6 @@ https://github.com/wangxiaodong1226/wangxiaodong1226.github.io<br>
 * Ajax请求不能发送
 * 无法获取DOM元素并进行操作
 * 无法读取Cookie、LocalStorage和IndexDB
----
 
 ## **出于怎样的考虑，浏览器才能设置跨域**？
 `同源政策的目的，是为了保证用户信息的安全，防止恶意的网站窃取数据。是浏览器做的努力`<br>
@@ -59,15 +58,12 @@ https://github.com/wangxiaodong1226/wangxiaodong1226.github.io<br>
 其次，**同源策略主要是为了保证用户信息的安全，可分为两种:Ajax同源策略和DOM同源策略**。<br>
 `Ajax同源策略主要是使得不同源的页面不能获取cookie且不能发起Ajax请求，这样在一定层度上防止了CSRF攻击。`<br>
 `DOM同源策略也一样，它限制了不同源页面不能获取DOM，这样可以防止一些恶意网站在自己的网站中利用iframe嵌入正规的网站并迷惑用户，以此来达到窃取用户信息`。<br>
----
 
 ## 实际开发场景为什么会出现跨域
 1.前后端部署的机子，不属于同一台云服务器<br>
 2.同一台服务器，但是你在https://github.com请求的是https://github2.com上的资源<br>
----
 
 ## 实现跨域的方式
-
 ### JSONP
 `浏览器虽然有同源限制，但是项script标签这种通过src地址来加载一些内容的时候浏览器是允许进行跨域请求的。`<br>
 `利用script标签没有浏览器跨域限制的漏洞，网页可以得到从其他来源动态产生的JSON数据。JSONP请求一定需要对方的服务器做支持才可以。`<br>
