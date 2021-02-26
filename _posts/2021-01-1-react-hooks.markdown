@@ -2,7 +2,7 @@
 layout:     post
 title:      "React Hooks study"
 subtitle:   " \"useState useMemo useReducer useContext useEffect useRef\""
-date:       2021-01-17 12:00:00
+date:       2021-01-01 12:00:00
 author:     "Yandong"
 header-img: "img/post-bg-2021.jpg"
 tags:

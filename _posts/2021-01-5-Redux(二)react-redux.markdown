@@ -2,7 +2,7 @@
 layout:     post
 title:      "Redux(二)react-redux"
 subtitle:   " \"React-redux\""
-date:       2021-01-21 12:00:00
+date:       2021-01-05 12:00:00
 author:     "Yandong"
 header-img: "img/post-bg-2021.jpg"
 tags:

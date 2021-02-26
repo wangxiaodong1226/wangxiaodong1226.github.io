@@ -2,7 +2,7 @@
 layout:     post
 title:      "Redux(一)初见"
 subtitle:   " \"Redux\""
-date:       2021-01-20 12:00:00
+date:       2021-01-04 12:00:00
 author:     "Yandong"
 header-img: "img/post-bg-2021.jpg"
 tags:

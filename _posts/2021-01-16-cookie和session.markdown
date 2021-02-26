@@ -2,7 +2,7 @@
 layout:     post
 title:      "cookie和session的异同"
 subtitle:   " \"cookie vs session\""
-date:       2021-02-01 12:00:00
+date:       2021-01-16 12:00:00
 author:     "Yandong"
 header-img: "img/post-bg-2021.jpg"
 tags:
