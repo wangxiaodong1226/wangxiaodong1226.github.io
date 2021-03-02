@@ -1,0 +1,117 @@
+---
+layout:     post
+title:      "ES6新特性"
+subtitle:   " \"不折腾的前端，和咸鱼有什么区别\""
+date:       2021-02-22 12:00:00
+author:     "Yandong"
+header-img: "img/post-bg-2021.jpg"
+tags:
+    - JS
+---
+
+* 1）支持let和const 
+     let(定义常量) const(定义常量)<br>
+    在之前JS没有块级作用域，现在const与let都是块级作用域<br>
+            ```
+            {
+                var a =10
+            }
+            log(a)//10  使用var定义的变量为函数作用域
+            {
+                let a = 10
+            }
+            log(a)//a is not defined  使用let和const定义的变量为块级作用域
+            ```
+*  2）箭头函数
+    可以简写function<br>
+    同时箭头函数与包围它的代码共享一个this，能较好地解决this指向问题<br>
+    (在以前需要var that = this这种外围this的模式 借助=>就不需要了)<br>
+           ```
+            var that = this
+            $('.btn').click(function(event){
+                that.sendData()
+            })
+
+            $('.btn').click((event)=>{
+                this.sendData()
+            })
+           ```
+* 3)类class
+     ES6引入类，让javascript面向对象编程变得更加简单和易于理解 <br>
+            ```
+            class Animal{
+                constructor(props){
+                    this.name = name
+                    this.color = color
+                }
+                toString(){
+                    log('name'+this.name+',color'+this.color)
+                }
+            }
+            var animal = new Animal('dog','white')//实例化
+            animal.toString()
+            ```
+ * 4）解构赋值
+    可以方便的从数组或对象中快速提取值赋给定义的变量<br>
+           ```
+            var foo = ['one','two','three','four']
+            var [one,two,three] = foo
+            log(one)//'one'  
+            [a,b] = [1,2]
+            log(a)//1       
+            
+            const student={name:'Ming',age:'18',city:'Shanghai'}
+            const {name,age,city}=student
+            log(name)//'Ming'
+           ```
+*  5）模块化Module
+    主要由export和import组成，export来规定模块对外暴露的接口<br>
+    通过import来引用其他模块提供的接口<br>
+    ES6允许在一个模块中使用export来导出多个变量和函数<br>
+           ```
+            export var name = 'Rainbow'
+            var name = 'Rainbow' var age = '24'
+            export {name,age}
+            export function myModule(someArg){
+                return someArg
+            }
+            导入(import)
+            import {myModule} from 'myModule'
+            import {name,age} from 'test'
+           ```
+*  6）模板字符串
+     ES6支持模板字符串 使得字符串的拼接更加简洁直观<br>
+    只需要${}就可以完成字符串的拼接，只需要将变量放在大括号里 并放在反引号里<br>
+            ```
+            var id = 1;
+            var first = 'g'
+            var last = 'm'
+            var name = 'Your name is'+first+' '+last+'.'
+            let name = `Your name is ${first} ${last}.`;
+            var url = 'http://localhost:3000/api/messages/'+id
+            let url = `http://localhost:3000/api/messages/${id}`
+            ```
+*   7）延展操作符...
+    函数调用 myFunction(...iterableObj)<br>
+            function sum(x,y,z){return x+y+z}<br>
+            const numbers=[1,2,3]<br>
+            log(sum.apply(null,numbers))//原始<br>
+            log(sum(...numbers))//6<br>
+            构造数组[...iterableObj,'4',...'hello',6]<br>
+            没有展开语法只能使用push splice concat等方法<br>
+            来将已有数组元素变成新数组一部分 有了展开语法 构造新数组更简单<br>
+            const persons = ['Tony',..stuents,'Aaron']<br>
+            数组拷贝 var arr = [1,2,3] var arr2 = [...arr]//等同于arr.slice()<br>
+            连接多个数组 var arr1=[0,1,2] var arr2=[3,4,5] var arr3=[...arr1,...arr2]//等同于arr1.concat(arr2)<br>
+            构造对象时，进行克隆或者属性拷贝let objClone={...obj}<br>
+                    var obj1 = {foo:'bar',x:42}<br>
+                    var obj2 = {foo:'baz',y:13}<br>
+                    var cloneObj ={...obj1}//克隆后对象{foo;'bar',x:42}
+ * 8）对象属性简写(对象中必须包含属性和值，显得非常冗余)
+    对象中直接写变量 const student = {name,  age,};<br>
+*  9）Promise
+    不使用ES6<br>
+    嵌套两个setTimeout回调函数<br>
+    使用ES6 promise使用两个then进行异步编程串行化，避免了回调地狱<br>
+
+*  10）在javascript中，定义函数需要关键字function，但是在es6中，可以不需要
