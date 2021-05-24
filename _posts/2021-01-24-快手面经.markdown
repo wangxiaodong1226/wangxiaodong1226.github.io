@@ -1,0 +1,99 @@
+---
+layout:     post
+title:      "快手一面"
+subtitle:   " \"快手面经\""
+date:       2021-01-24 12:00:00
+author:     "Yandong"
+header-img: "img/post-bg-2021.jpg"
+tags:
+    - 面经
+---
+### 1.flex布局
+
+### 2.水平垂直居中几种方式
+
+### 3.position属性
+position：static默认值，元素没有开启定位；
+position:relative;开启元素的相对定位；
+相对定位元素相对于其自身在文档流中的位置来定位，不会脱离文档流
+position:absolute;开启元素的绝对定位;
+绝对定位的元素是相对于距离他最近的开启了定位的祖先元素进行定位。
+如果所有的祖先元素都没有开启定位，则相对于浏览器窗口进行定位。会完全脱离文档流。
+position:fixed;开启元素的固定定位
+固定定位特殊的绝对定位，只不过固定定位的元素永远都是相对于浏览器窗口进行定位的，并且不会随滚动条滚动。
+### 4. js通过id找标签
+document.getElementById("")
+
+### 5.查找子代相同标签的个数
+document.getElementById("").length
+
+### 6.cookie和localstorage的区别?
+
+* cookie的特点
+cookie数据始终在同源的http请求中携带(即使不需要)，即cookie在浏览器和服务器间来回传递
+​cookie数据还有路径（path）的概念，可以限制。cookie只属于某个路径下
+
+​存储大小限制也不同，cookie数据不能超过4K，同时因为每次http请求都会携带cookie，所以cookie只适合保存很小的数据，如回话标识。localStorage比cookie大得多，可以达到5M或更大
+
+​数据的有效期不同，localStorage：始终有效，窗口或浏览器关闭也一直保存，因此用作持久数据；cookie：只在设置的cookie过期时间之前一直有效，即使窗口和浏览器关闭。
+
+​作用域不同，localStorage：在所有同源窗口都是共享的；cookie：也是在所有同源窗口中共享的。
+
+
+Cookie:
+    在客户端存储信息，问题是存储量小
+    安全性不高，可以找到文件
+    作用:免登录；记录广告点击次数信息
+    Document.cookie='username=lisi&age=23'
+
+    Session会话，重启浏览器就会过期
+    Now.setDate(过期时间)
+
+    sessionStorage关闭浏览器就删除
+    loclaStorage：一直有，除非手动删除
+    sessionStorage和localStorage存储量比cookie大
+    cookie用不用都从客户端发送到服务端，会浪费传输的数据量。
+
+    cookie和session区别?
+    cookie客户端 session服务端 session是服务器端的会话
+    登录成功把用户信息存在session里面，然后在进行操作的时候
+    先判断是否登录，服务器辨别不同的session
+    为不同的浏览器辨别不同的session,客户端与服务器端建立连接后，
+    服务器端在cookie里面存一个sessionID的码，Session在底层原理会用到cookie
+
+### 7.TDP和UDP的区别?
+1.TCP是面向连接的，UDP是无连接的即发送数据前不需要先建立连接。
+2.TCP提供可靠的服务，也就是说，通过TCP连接传送的数据，无差错，不丢失，不重复，且按序到达；UDP尽最大努力交付，即不保证可靠交付，并且因为 TCP 可靠，面向连接，不会丢失数据因此适合大数据量的交换。
+3.TCP是面向字节流，UDP面向报文，并且网络出现拥塞不会使得发送速率降低
+  (因此会出现丢包,对实时的应用比如IP电话和视频会议等)
+4.TCP是1对1的，UDP支持1对1,1对多
+5.TCP的首部较大为20字节，而UDP只有8字节
+6.TCP是面向连接的可靠性传输，而UDP是不可靠的
+### 8.三次握手
+
+### 9.四次挥手
+https://wangxiaodong1226.xyz/2021/01/10/TCP/
+
+
+### 10.Vue的生命周期
+beforeCreate(创建前)、created(创建后)、beforeMount(载入前)、mounted(载入后)、
+beforeUpdate(更新前)、updated(更新后)、
+beforeDestory(销毁前)、destroyed(销毁后)
+
+* 什么是vue生命周期?
+Vue实例从创建到销毁的过程，就是生命周期。
+也就是从开始创建、初始化数据、编译模板、挂载DOM
+->渲染、更新->渲染、卸载等一系列的过程。
+* vue生命周期的作用是什么?
+生命周期中有多个事件钩子，让我们在控制Vue实例的过程中更容易形成好的逻辑。
+* vue生命周期总共有几个阶段?
+总共分为8个阶段：创建前/后、载入前/后、销毁前/销毁后
+* 第一次页面加载会触发哪几个钩子?
+第一次页面加载时会触发beforeCreate,created,beforeMount,mounted这几个钩子
+* DOM渲染在哪个周期中就已经完成?
+DOM渲染在mounted中就已经完成了
+* 简单描述每个周期具体适合哪些场景?
+生命周期钩子的一些使用方法:beforecreate可以在这加个loading事件，在加载实例时触发created,初始化完成时的事件写在这里，如在这结束loading事件；
+异步请求也适宜在这里调用
+mounted:挂载元素，获取到DOM节点
+updated:如果对数据统一处理，在这里写上相应函数beforeDestory:可以做一个确认事件的确认框nexttick;更新数据后立即操作dom

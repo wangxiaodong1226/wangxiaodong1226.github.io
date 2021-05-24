@@ -1,0 +1,27 @@
+---
+layout:     post
+title:      "深拷贝vs浅拷贝"
+subtitle:   " \"不折腾的前端，和咸鱼有什么区别\""
+date:       2021-02-22 12:00:00
+author:     "Yandong"
+header-img: "img/post-bg-2021.jpg"
+tags:
+    - JS
+---
+### 浅拷贝以赋值的形式拷贝引用对象，仍指向同一个地址，修改时原对象也会受到影响;深拷贝完全拷贝一个新对象，修改时原对象不再受到任何影响
+深拷贝
+## 浅拷贝
+浅拷贝是拷贝第一层的拷贝
+使用Object.assign解决这个问题
+```
+    let a={
+        age；1
+    }
+    let b = Object.assign({},a);
+    a.age = 2
+    console.log(b.age);//1
+```
+
+
+
+[参考](https://www.jianshu.com/p/55d3e1b3afab)

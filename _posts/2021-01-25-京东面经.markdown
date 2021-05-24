@@ -1,0 +1,180 @@
+---
+layout:     post
+title:      "京东一面"
+subtitle:   " \"京东面经\""
+date:       2021-01-25 12:00:00
+author:     "Yandong"
+header-img: "img/post-bg-2021.jpg"
+tags:
+    - 面经
+---
+### 1.Ajax中状态值和状态码?
+状态值:
+  0:请求未初始化
+  1:服务器连接已建立
+  2:请求已接收
+  3：请求处理中
+  4：请求以完成，且响应己就绪
+状态码：
+* 101 接受请求正在处理
+* 200OK，客户端发来的请求在服务器端被正确处理
+* 301 moved permanently,永久重定向，表示资源已被分配了新的URL
+* 302 found,临时性重定向，表示资源临时被分配了新的URL
+* 304 not modefied,文档内容未被修改，服务器允许访问资源，但因但因发生请求未满足条件的情况
+* 401 unauthorized,发送的请求需要有通过HTTP认证的认证信息
+* 403 forbidden,对请求资源的访问被服务器拒绝
+* 404 not found,资源不存在
+* 500 internal server error,服务器内部错误
+* 503 service unavailable,服务器超负载停机维护
+### 2.CSS优先级?
+imporrant>行内样式>ID选择器>类选择器》标签》通配符》继承》浏览器默认属性
+
+同一级别后写的会覆盖先写的样式
+### 3.CSS元素击中方式
+
+### 4.gitClone
+gitClone将其他仓库克隆到本地
+gitPull 拉取远程分支更新到本地仓库的操作
+### 5.HTTP协议
+
+### 6.js单线程，eventloop
+
+### 7.JS数组常用操作？
+改变原数组值的方法7个
+splice()添加/删除数组元素，如果是删除，返回删除数组
+sort()数组排序
+pop()删除数组最后一个元素
+shift()删除数组第一个元素
+push()向数组末尾添加元素
+unshift()向数组开头添加元素
+reverse()颠倒数组元素的顺序
+不改变原数组值得方法5个
+slice(start,end)浅拷贝数组的元素
+join('|')数组转字符串可加分隔符
+concat()
+toString()数组转字符串
+indexof()查找数组中是否存在某个元素，返回下标
+
+数组遍历方法10个
+foreach()在每个数组项上调用callback来实现遍历
+every()检测数组所有元素是否都符合判断条件
+some()数组中是否有满足判断条件的元素
+filter()过滤原始数组，返回新数组
+map()在数组的每一项上调用callback来创建新数组
+reduce()为数组提供累加器，合并为一个值
+find()根据条件找到数组成员
+for of 循环遍历数组项
+Array.from()在数组每一项上调用callback创建新数组
+
+### 8.MVC和MVVM
+MVC:是比较直观的架构模式，用户操作->View(负责接收用户的输入操作)->Controller（业务逻辑处理）
+->Model(数据持久化)->View(将结果反馈给View)
+MVC允许在不改变视图的情况下改变视图对用户输入的响应方式，用户对View的操作交给了Controller处理，
+在Controller中响应View的事件调用Model的接口对数据进行操作，一旦Model发生变化便通知相关视图进行更新。
+
+ MVVM:将“数据模型数据双向绑定”的思想作为核心，因此在View和Model之间没有联系，
+通过ViewModel进行交互，而且Model和ViewModel之间的交互是双向的，
+因此视图数据的变化会同时修改数据源，而数据源数据的变化也会立即反映到View上。
+
+MVVM与MVC最大的区别就是：它实现了View和Model的自动同步，也就是当Model的属性改变时，
+我们不用再自己手动操作Dom元素，来改变View的显示，而是改变属性后该属性对应View层显示会自动改变。
+
+这里我们拿典型的MVVM模式的代表，Vue，Vue实例中的data相当于Model层，而ViewModel层的核心是Vue中的双向数据绑定，
+即Model变化时VIew可以实时更新，View变化也能让Model发生变化。
+
+整体看来，MVVM比MVC精简很多，不仅简化了业务与界面的依赖，还解决了数据频繁更新的问题，不用再用选择器操作DOM元素。
+因为在MVVM中，View不知道Model的存在，Model和ViewModel也观察不到View，这种低耦合模式提高代码的可重用性
+
+mvc 中大量的 DOM 操作使页面渲染性能降低，加载速度变慢，影响用户体验。
+和当 Model 频繁发生变化，开发者需要主动更新到 View
+
+### 9.position定位
+
+### 10.Vue中两种router
+hash模式
+在浏览器中符号#，#以及#后面的字符称之为hash，用window.location.hash读取，
+注意:hash虽然在URL中，但不会提交给服务器端，只在浏览器端使用。
+history模式
+路由路径中没有#，利用HTML5的新特性:pushState()/replaceState()及popState事件监听
+注意:路径会提交给后台，在生产环境下会出现404
+### 11.跨域问题
+1.**JSONP**,只能用get方法 <br>
+2.**CORS** <br>
+CORS背后的基本思想是使用自定义的HTTP头部让浏览器与服务器进行沟通，从而决定请求或响应是应该成功还是失败。
+它允许浏览器向跨源服务器，发出XMLHttpRequest请求，从而克服了AJAX只能同源使用的限制<br>
+3.**使用HTML5中新引入的window.postMessage方法来跨域传送数据**，使用它来自其他的window对象发送消息，无论这个window对象是属于同源或不同源，目前IE8+、FireFox、Chrome、Opera等浏览器都已经支持window.postMessage方法<br>
+4.**服务器代理**<br>
+5.**Websocket**实现了浏览器与服务器的全双工通信，同时也是跨域的一种解决方案<br>
+6.**使用window.name来进行跨域**；window对象有个name属性，该属性有个特征：即在一个窗口(window)的生命周期内，窗口载入的所有页面都是共享一个window.name的，每个页面对window.name都有读写的权限，window.name是持久
+存在一个窗口载入过的所有页面中的，并不会因新页面的载入而进行重置。<br>
+7.**通过修改document.domain来跨子域**。只能把document.domain设置成自身或更高一级的父域<br>
+8.**flash**
+
+
+### JSONP
+`浏览器虽然有同源限制，但是项script标签这种通过src地址来加载一些内容的时候浏览器是允许进行跨域请求的。`<br>
+`利用script标签没有浏览器跨域限制的漏洞，网页可以得到从其他来源动态产生的JSON数据。JSONP请求一定需要对方的服务器做支持才可以。`<br>
+
+优缺点:
+1.【优点】Ajax和JSONP都是客户端向服务端发送请求，从而获取数据的方式。但是Ajax属于同源策略，而JSONP属于非同源策略。<br>
+2.【优点】兼容性好，能解决主流浏览器跨域访问的问题<br>
+3.【缺点】仅支持get请求<br>
+4.不安全，可能会遭受到xss攻击。<br>
+
+实现过程:<br>
+* `创建一个 script 标签，这个 script 标签的 src 就是请求的地址`；
+* `这个 script 标签插入到 DOM 中，浏览器就根据 src 地址访问服务器资源`
+* `返回的资源是一个文本，但是因为是在 script 标签中，浏览器会执行它`
+* `而这个文本恰好是函数调用的形式，即函数名（数据），浏览器会把它当作 JS 代码来执行即调用这个函数`
+* `只要提前约定好这个函数名，并且这个函数存在于 window 对象中，就可以把数据传递给处理函数`
+
+看[JSOP手写源码系列]()
+
+### CORS
+跨域资源请求(CORS)是一种机制，是W3C标准。<br>
+
+`浏览器在请求一个跨域资源的时候，如果是跨域的 Ajax 请求，他会在请求头中加一个origin字段，但他是不知道这个资源服务端是否允许跨域请求的。浏览器会发送到服务端，如果服务器返回的头中没有'Access-Control-Allow-Origin': '对应网址或 * ' 的话，那么浏览器就会把请求内容给忽略掉，并且在控制台报错`<br>
+
+它**允许浏览器向跨源服务器，发出XMLHttpRequest或Fetch请求请求，并且整个CORS通信过程都是浏览器自动完成的，不需要用户参与**。<br>
+
+而**使用这种跨域资源共享的前提是，浏览器必须支持这个功能，并且服务器端也必须同意这种‘跨域’请求，因此实现CORS的关键是服务器需要服务器**。<br>
+
+**浏览器会自动进行CORS通信，实现CORS通信的关键是后端，只要后端实现了CORS，就实现了跨域**。<br>
+
+`服务端设置Access-Control-Allow-Origin,就可以开启CORS`。<br>
+该属性`表示哪些域名可以访问资源，如果设置通配符则表示所有网站都可以访问资源`。<br>
+
+CORS的请求分为两种:
+
+* **简单请求的发送从代码上看起来和普通的XHR没太大区别，但是HTTP头当中要求总是包含一个域(Origin)的信息。该域包含协议名、地址以及一个可选的端口**。
+HTTP方法包括HEAD、GET、POST <br>
+HTTP头信息包括Accept、Accept-Langange、Content-Langange、Last-Event-ID等<br>
+
+
+* **复杂请求不止发送一个请求。其中最先发送的是一种'预请求'，而服务器也需要返回'预回应'作为相应。预请求实际上是对服务器的一种权限请求，只有当预请求成功返回，实际请求才开始执行**。
+
+`CORS预请求，服务器在HTTP header中加入允许请求的方法和Content-Type后，其他指定的方法和Content-Type就可以成功请求了`。
+```
+   'Access-Control-Allow-Headers': '允许Content-Type'
+   'Access-Control-Allow-Methods': '允许的请求方法'
+   'Access-Control-Max-Age': '预请求允许其他方法和类型传输的时间' 
+```
+---
+
+## postMessage
+postMessage 是 HTML5 XMLHttpRequest Level 2 中的 API，且是为数不多可以跨域操作的 window 属性之一.<br>
+
+`postMessage() 方法允许来自不同源的脚本采用异步方式进行有限的通信，可以实现跨文本档、多窗口、跨域消息传递`。<br>
+![java-javascript](/img/网络/16.png)
+
+## Websocket
+Websocket是HTML5的一个持久化的协议，它实现了浏览器与服务器的全双工通信，同时也是跨域的一种解决方案。<br>
+Websocket是一种双向通信协议，在建立连接之后，Websocket的server与client都能主动向双方发送或接受数据。<br>
+![java-javascript](/img/网络/16.png)
+
+[详见](https://wangxiaodong1226.xyz/2021/02/03/websocket%E5%92%8Chttp%E5%8C%BA%E5%88%AB/)
+
+## Nginx
+使用Nginx反向代理实现跨域，是最简单的跨域方式。<br>
+只需要修改Nginx的配置即可解决跨域问题，支持所有的浏览器，支持Session，不需要修改任何代码，并且不会影响服务器性能。
+### 12.深拷贝与浅拷贝

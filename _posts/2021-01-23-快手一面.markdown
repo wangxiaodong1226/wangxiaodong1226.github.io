@@ -1,0 +1,185 @@
+---
+layout:     post
+title:      "快手一面"
+subtitle:   " \"快手面经\""
+date:       2021-01-23 12:00:00
+author:     "Yandong"
+header-img: "img/post-bg-2021.jpg"
+tags:
+    - 面经
+---
+### 1.SASS是什么？
+Sass是CSS的预处理器，是CSS语法的一种增强，能够编译后生成css，更加简洁。
+增加了变量、嵌套、混合(mixins)、继承(extend)、导入、函数与运算等
+* 怎么使用Sass呢
+$color:#eee
+i{
+    color:$color
+}
+函数与运算
+@base-color:#111;
+.i5,i6{
+    background:(@base-color*3)
+}
+
+* Sass与Less区别
+Sass是以$开头的变量，$mainColor:#eee;
+Less是以@开头定义的变量 @mainColor:#eee;
+
+### 2.css垂直水平居中
+外部定义一个父盒子
+width500px height500px  border；1px solid black
+margin:0 auto,position:relative;
+
+内部盒子width100px height100px border-color:#bfc
+--定宽高定位
+1.父盒子相对定位 子盒子绝对定位
+    left50%,top50%
+    margin-left:-50px,margin-top:-50px
+2.父盒子相对定位 子盒子绝对定位
+    top0,left0,right0,bottom0
+    margin:auto
+3.父盒子相对定位 子盒子绝对定位
+    top:calc(50% - 50px); 读kao ke
+    left:calc(50% - 50px)
+--不定宽居中 直接标签里加内容了
+4.父盒子相对定位 子盒子绝对定位
+    top50% left50%
+    transform:translate(-50%,-50%)
+5.弹性布局flex
+    display；flex;
+    justify-content:center;
+    align-items:center;
+6.css-table属性
+    display:table-ceil;
+    text-align:center;
+    vertical-align；middle
+    子盒子：display:inline-block
+### 3.flex布局
+弹性盒可以使一个盒子自动适应其容器的大小，通过弹性盒可以创造出非常灵活的布局。
+设置弹性容器有display-flex块级弹性容器display:inline-flex行内弹性容器两种方式
+弹性容器的属性有
+flex-direction用来设置弹性容器的主轴方向(row还是column) 读kao len
+flex-wrap设置弹性元素在主轴上是否自动换行(wrap还是nowrap)
+flex-flow：是一个简写属性，可以同时设置flex-direction和flex-wrap
+justify-content元素在主轴上的对齐方式(flex-start主轴起边 flex-end主轴终边 center中间 space-between空白区域平均分配弹性元素间 space-around空白空间设置元素的前后 stretch拉伸使元素充满盒子)
+align-items设置侧轴对齐方式(flex-start侧轴终边 flex-end侧轴终边 center侧轴中间 stretch拉伸撑满侧轴)
+弹性元素的属性有
+flex-shrink:0禁止盒子收缩 否则默认为1 子元素宽度超过父元素 会超出去父盒子
+flex-grow:1设置盒子的伸展，1子元素拉伸撑开 0不变
+flex-basic：100px设置弹性元素宽度，一旦设置取代width
+flex:0 0 200px简写属性 同时设置flex-grow flex-shrink flex-basis
+### 4.let const var
+var 声明变量存在变量提升 会预解析 let和const 不会
+let const 的作用范围是块级作用域 而var的作用域是函数作用域
+同一作用域下let和const不能声明同名变量 而var可以
+同一作用域下在let和const声明前使用会存在暂时性死区
+全局声明的var变量会挂载在window上 而let和const不会
+const和let差不多 但const是常量 初始值必须赋值且不能修改 (如果是对象的话 对象值可以改变用Object.freeze(obj))
+
+### 5.promise回调地狱
+promise对象将扮演一个真实数据的代理角色，可以在Promise对象上绑定一个回调函数
+一旦数据变得可用这个回调函数就会被调用，采用promise，连续读取多个文件
+一个promise有三种状态:等待(pending)、已完成(fulfilled)、已拒绝(rejected)
+promise必须返回一个then方法，并且返回一个promise，同一个then可以多次调用
+then方法接收两个参数，一个是成功的回调，promise由等待态转换到完成态 另一个是失败回调 等待态转换拒绝态
+同时then可以接收另一个promise转入，解决回调地狱
+```
+    const promise = new Promise((resolve,reject)=>{
+        console.log(1)
+        resolve('success');
+        console.log(2)
+    })
+    promise.then(()=>{
+        console.log(3)
+    })
+```
+### 6.promise静态方法有哪些？
+promsie.all([p1,p2,p3])方法：
+并行执行多个promise任务，在所有异步操作执行完后才执行回调，如果全部成功执行，则以数组的方式返回所有 Promise 任务的执行结果。
+如果有一个 Promise 任务 rejected，则只返回 rejected 任务的结果
+promise.race()方法谁先走完谁先输出
+多个 Promise 任务同时执行，返回最先执行结束的 Promise 任务的结果，不管这个 Promise 结果是成功还是失败。
+
+### 7.箭头函数
+ES6增加了箭头函数用来代替function的写法
+箭头函数的this默认指向定义它时，它所处的对象，而不是执行时的对象
+如果想在一个新的函数内部用到当前的this，那就用箭头函数来做，而如果新的函数要用自己的this，那就不要用箭头函数。
+
+### 8.fetch方法
+fetch是一种HTTP数据请求的方式，是XMLHttpRequest的升级版，fetch()接收一个URL字符串作为参数，默认向该网址发出GET请求，返回一个Promise对象，通过.then方法获取数据
+### fetch和Jquery Ajax区别?
+传统 Ajax 指的是 XMLHttpRequest（XHR）， 最早出现的发送后端请求技术  多年的更新维护，Ajax非常的方便
+核心使用XMLHttpRequest对象，多个请求之间如果有先后关系的话，就会出现回调地狱。
+不符合关注分离的原则 配置和调用方式非常混乱，而且基于事件的异步模型不友好
+本身是针对MVC的编程,不符合现在前端MVVM的浪潮
+
+fetch号称是AJAX的替代品，是在ES6出现的，Fetch是基于promise设计的 
+使用了ES6中的promise对象  Fetch的代码结构比起ajax简单多了，
+符合关注分离，没有将输入、输出和用事件来跟踪的状态混杂在一个对象里,更好更方便的写法
+语法简洁，更加语义化，基于标准promise实现 支持async/await
+更加底层，提供的API丰富
+问题：可以把它考虑成原生的XHR，所以使用起来并不是那么舒服，需要进行封装。
+    fetch只对网络请求报错，对400，500都当做成功的请求，服务器返回 400，500 错误码时并不会 reject，
+    只有网络错误这些导致请求不能完成时，fetch 才会被 reject
+```
+   fetch(url)
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(data) {
+        console.log(data);
+    })
+    .catch(function(e) {
+        console.log("Oops, error");
+    }); 
+```
+
+### 9.原型链
+查找某个属性的时候，如果一个实例对象不存在某个属性，那么Javascript就会往该构造函数的原型上去找；
+如果该构造函数的原型没找到，就继续往他的再一个原型上找，直到找到Object的原型上找，如果Object的原型还没有，那就返回undefined。
+实例对象.xxx->构造函数.prototype.xxx->Object.prototype.xxx
+每个 函数对象 都有一个 prototype 属性，这个属性的指向被称为这个函数对象的 原型对象。
+person._proto_===Person.prototype
+### 10.作用域链
+作用域链保存着当前作用域的变量对象及其上级作用域的变量对象，直到全局的变量对象。
+查找变量时就是沿着作用域链来查找的
+先在当前作用域的变量对象中查找，如果有就用；
+如果没有就会沿着作用域链的数组去上级作用域中的变量对象中查找；
+找到就返回对应的值，如果没有继续向上查找，直到找到最后一个变量对象(全局的变量对象)
+```
+    var a = 2;
+  function fn1() {
+    var b = 3;
+    function fn2() {
+      var c = 4;
+      console.log(c);
+      console.log(b);
+      console.log(a);
+      console.log(d);
+    }
+
+    fn2();
+  }
+  fn1();
+```
+### 11.vue双向绑定原理(v-model)
+vue实现双向数据绑定主要采用'发布-订阅'模式的方式，通过Object.defineProperty()的set和get,
+在数据变动时发布消息给订阅者触发监听。
+
+1实现一个数据监听器Observer(),能够对数据对象的所有属性进行监听，如有变动可以拿到最新值并通知订阅者。
+2.实现一个指令解析器Compile(),对每个元素节点的指令进行扫描和解析，根据指令模板替换数据，以及绑定相应的更新函数
+3.实现一个Watcher(),作为连接Observer和Compile的桥梁，能够订阅并接收每个属性变动的通知，执行指令绑定的相应回调函数，从而更新视图。
+
+### 12.vue3了解吗?
+更快，更小，更易于维护，更多的原生支持，更易于开发使用
+在之前vue2，this的指向是难以琢磨的，而且有许多限制
+而在vue3中，抛弃了this这个难以理解的概念，直接用声明式的函数来实现数据响应。
+vue3通过setup函数取代vue2中的date函数，返回一个对象暴露给模板，我们一切的响应式操作都在setup函数中实现。
+
+还有一个明显的变化就是父子组件的传值，通过参数的形式(props、SetupContext)
+
+基于Proxy的观察者机制
+目前，Vue的反应系统使用Object.defineProperty的getter和setter.
+但是，Vue3将使用ES2015 Proxy作为其观察者机制，
+这消除了以前存在的警告，并节省了一半的内存开销。

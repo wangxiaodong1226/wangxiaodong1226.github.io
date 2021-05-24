@@ -6,7 +6,7 @@ date:       2021-02-22 12:00:00
 author:     "Yandong"
 header-img: "img/post-bg-2021.jpg"
 tags:
-    - JS
+    - ES
 ---
 
 * 1）支持let和const 
